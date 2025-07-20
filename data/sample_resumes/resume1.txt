@@ -1,0 +1,6 @@
+
+John Doe
+Email: john.doe@example.com
+Skills: Python, SQL, Machine Learning, Data Visualization, Pandas, Numpy
+Experience: Data Analyst at XYZ Corp (2020-2023)
+Education: B.Sc in Computer Science

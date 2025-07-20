@@ -1,0 +1,4 @@
+
+We are hiring a Data Scientist with strong experience in Python, Machine Learning, SQL, and TensorFlow.
+Responsibilities include building ML models, analyzing data, and communicating insights.
+Nice to have: experience with NLP, Docker, and cloud services.

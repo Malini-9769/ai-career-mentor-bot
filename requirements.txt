@@ -1,0 +1,9 @@
+streamlit
+pdfplumber
+openai
+requests
+schedule
+beautifulsoup4
+lxml
+email-validator
+python-dotenv
