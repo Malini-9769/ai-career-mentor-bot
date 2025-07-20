@@ -66,7 +66,7 @@ jobs:
         run: python backend/job_emailer/scheduler.py
 
       - name: 📤 Upload Job Matches as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: weekly_job_matches
           path: job_matches/weekly_matches.txt
