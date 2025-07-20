@@ -24,4 +24,4 @@ jobs:
         pip install requests schedule
 
     - name: Run Job Email Scheduler
-      run: python ai-career-mentor-bot/backend/job_emailer/scheduler.py
+      run: python backend/job_emailer/scheduler.py
