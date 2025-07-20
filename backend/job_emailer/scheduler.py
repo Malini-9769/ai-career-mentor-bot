@@ -40,6 +40,15 @@ with open(output_path, "w", encoding="utf-8") as f:
 
 print(f"✅ Job matches with fit scores saved to: {output_path}")
 
+from email_sender import send_job_email
+
+# import os
+
+recipient = os.getenv("RECIPIENT_EMAIL")
+if recipient:
+    send_job_email(recipient, job_matches)
+else:
+    print("⚠️ No RECIPIENT_EMAIL found in environment variables.")
 
 
 
