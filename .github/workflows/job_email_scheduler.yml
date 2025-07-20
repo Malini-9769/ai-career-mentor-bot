@@ -30,3 +30,9 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       run: python backend/job_emailer/scheduler.py
+    - name: Upload job matches as artifact
+      uses: actions/upload-artifact@v4
+      with:
+       name: weekly-job-matches
+       path: backend/job_emailer/job_matches/weekly_matches.txt
+
