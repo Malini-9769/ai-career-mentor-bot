@@ -3,13 +3,20 @@
 
 import os
 from job_fetcher import fetch_jobs
-from skill_matcher import match_skills
+# from skill_matcher import match_skills
 from email_sender import get_user_profile
 
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-output_dir = "job_matches"
-os.makedirs(output_dir, exist_ok=True)
+# import sys
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# output_dir = "job_matches"
+# os.makedirs(output_dir, exist_ok=True)
+
+# Add absolute path to backend directory
+skill_matcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, skill_matcher_path)
+
+from skill_matcher import match_skills
+
 
 user = get_user_profile()
 jobs = fetch_jobs()
