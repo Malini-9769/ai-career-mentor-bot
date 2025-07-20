@@ -6,6 +6,8 @@ from job_fetcher import fetch_jobs
 from skill_matcher import match_skills
 from email_sender import get_user_profile
 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 output_dir = "job_matches"
 os.makedirs(output_dir, exist_ok=True)
 
