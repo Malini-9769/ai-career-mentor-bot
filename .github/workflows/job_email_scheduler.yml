@@ -63,6 +63,12 @@ jobs:
           pip install -r requirements.txt
 
       - name: 🧠 Run Weekly Matcher
+        env:
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         run: python backend/job_emailer/scheduler.py
 
       - name: 📤 Upload Job Matches as Artifact
