@@ -1,38 +1,73 @@
-name: Weekly Job Email Scheduler
+# name: Weekly Job Email Scheduler
+
+# on:
+#   schedule:
+#     - cron: '0 3 * * 1'  # Runs every Monday at 3:00 UTC
+#   workflow_dispatch:
+
+# jobs:
+#   send-weekly-email:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v3
+
+#     - name: Set up Python
+#       uses: actions/setup-python@v4
+#       with:
+#         python-version: '3.10'
+
+#     - name: Install dependencies
+#       run: |
+#         python -m pip install --upgrade pip
+#         pip install requests schedule
+
+#     - name: Run Job Email Scheduler
+#       env:
+#           EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+#           EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+#           EMAIL_USER: ${{ secrets.EMAIL_USER }}
+#           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+#       run: python backend/job_emailer/scheduler.py
+#     - name: Upload job matches as artifact
+#       uses: actions/upload-artifact@v4
+#       with:
+#        name: weekly-job-matches
+#        path: backend/job_emailer/job_matches/weekly_matches.txt
+
+
+name: Weekly Job Matcher
 
 on:
   schedule:
-    - cron: '0 3 * * 1'  # Runs every Monday at 3:00 UTC
-  workflow_dispatch:
+    - cron: '0 9 * * 1'  # Every Monday at 9:00 UTC
+  workflow_dispatch:     # Allow manual run
 
 jobs:
-  send-weekly-email:
+  match-and-upload:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests schedule
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Run Job Email Scheduler
-      env:
-          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-      run: python backend/job_emailer/scheduler.py
-    - name: Upload job matches as artifact
-      uses: actions/upload-artifact@v4
-      with:
-       name: weekly-job-matches
-       path: backend/job_emailer/job_matches/weekly_matches.txt
+      - name: 🧠 Run Weekly Matcher
+        run: python backend/job_emailer/scheduler.py
+
+      - name: 📤 Upload Job Matches as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: weekly_job_matches
+          path: job_matches/weekly_matches.txt
 
