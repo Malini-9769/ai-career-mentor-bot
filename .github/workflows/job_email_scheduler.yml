@@ -24,4 +24,9 @@ jobs:
         pip install requests schedule
 
     - name: Run Job Email Scheduler
+      env:
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       run: python backend/job_emailer/scheduler.py
