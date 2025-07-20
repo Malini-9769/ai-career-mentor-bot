@@ -58,7 +58,11 @@ output_path = os.path.join(output_dir, "weekly_matches.txt")
 # Save results
 with open(output_path, "w", encoding="utf-8") as f:
     for job in job_matches:
-        f.write(f"{job['file']}\nMatched Skills: {', '.join(job['matched_skills'])}\n\n")
+        if isinstance(job, dict) and "file" in job and "matched_skills" in job:
+            f.write(f"{job['file']}\nMatched Skills: {', '.join(job['matched_skills'])}\n\n")
+        else:
+            f.write(f"{job}\n\n")  # fallback if job is not in expected format
+        # f.write(f"{job['file']}\nMatched Skills: {', '.join(job['matched_skills'])}\n\n")
 
 print(f"✅ Job matches saved to: {output_path}")
 
