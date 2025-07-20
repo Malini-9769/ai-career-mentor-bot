@@ -1,3 +1,56 @@
+import sys
+import os
+
+# Set base directory to project root
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.insert(0, os.path.join(BASE_DIR, "backend"))
+
+from skill_matcher import match_skills
+from job_fetcher import fetch_jobs
+
+# Define user skills
+skills = ["Python", "Machine Learning", "NLP"]
+
+# Load job descriptions
+job_folder = os.path.join(BASE_DIR, "data", "job_descriptions")
+job_matches = match_skills(skills, fetch_jobs(job_folder))
+
+# Output directory for the file
+output_dir = os.path.join(BASE_DIR, "job_matches")
+os.makedirs(output_dir, exist_ok=True)
+
+output_path = os.path.join(output_dir, "weekly_matches.txt")
+
+# Save job matches with detailed info
+with open(output_path, "w", encoding="utf-8") as f:
+    for job in job_matches:
+        if isinstance(job, dict):
+            file_name = job.get("file", "Unknown File")
+            matched = ", ".join(job.get("matched_skills", []))
+            missing = ", ".join(job.get("missing_skills", []))
+            fit_score = job.get("fit_score", "N/A")
+            f.write(
+                f"📄 {file_name}\n"
+                f"✅ Matched Skills: {matched}\n"
+                f"❌ Missing Skills: {missing}\n"
+                f"📊 Fit Score: {fit_score}\n\n"
+            )
+        else:
+            f.write(f"{job}\n\n")
+
+print(f"✅ Job matches with fit scores saved to: {output_path}")
+
+
+
+
+
+
+
+
+
+
+
+
 # # # def run_scheduler():
 # # #     print('Scheduler running')
 
@@ -67,41 +120,41 @@
 # print(f"✅ Job matches saved to: {output_path}")
 
 
-import sys
-import os
+# import sys
+# import os
 
-# Set base directory to project root
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-sys.path.insert(0, os.path.join(BASE_DIR, "backend"))
+# # Set base directory to project root
+# BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+# sys.path.insert(0, os.path.join(BASE_DIR, "backend"))
 
-from skill_matcher import match_skills
-from job_fetcher import fetch_jobs
+# from skill_matcher import match_skills
+# from job_fetcher import fetch_jobs
 
-# Define skills manually or from config
-skills = ["Python", "Machine Learning", "NLP"]
+# # Define skills manually or from config
+# skills = ["Python", "Machine Learning", "NLP"]
 
-# Path to job descriptions
-job_folder = os.path.join(BASE_DIR, "data", "job_descriptions")
+# # Path to job descriptions
+# job_folder = os.path.join(BASE_DIR, "data", "job_descriptions")
 
-# Fetch and match jobs
-job_matches = match_skills(skills, fetch_jobs(job_folder))
+# # Fetch and match jobs
+# job_matches = match_skills(skills, fetch_jobs(job_folder))
 
-# Output path
-output_dir = os.path.join(BASE_DIR, "job_matches")
-os.makedirs(output_dir, exist_ok=True)
-output_path = os.path.join(output_dir, "weekly_matches.txt")
+# # Output path
+# output_dir = os.path.join(BASE_DIR, "job_matches")
+# os.makedirs(output_dir, exist_ok=True)
+# output_path = os.path.join(output_dir, "weekly_matches.txt")
 
-# Debug info
-print(f"🔍 Writing results to: {output_path}")
-print(f"📄 Total matches found: {len(job_matches)}")
+# # Debug info
+# print(f"🔍 Writing results to: {output_path}")
+# print(f"📄 Total matches found: {len(job_matches)}")
 
-# Write job matches to file
-with open(output_path, "w", encoding="utf-8") as f:
-    for job in job_matches:
-        if isinstance(job, dict) and "file" in job and "matched_skills" in job:
-            f.write(f"{job['file']}\nMatched Skills: {', '.join(job['matched_skills'])}\n\n")
-        else:
-            f.write(f"{job}\n\n")  # fallback for unexpected formats
+# # Write job matches to file
+# with open(output_path, "w", encoding="utf-8") as f:
+#     for job in job_matches:
+#         if isinstance(job, dict) and "file" in job and "matched_skills" in job:
+#             f.write(f"{job['file']}\nMatched Skills: {', '.join(job['matched_skills'])}\n\n")
+#         else:
+#             f.write(f"{job}\n\n")  # fallback for unexpected formats
 
-print("✅ Job matches saved successfully!")
+# print("✅ Job matches saved successfully!")
 
